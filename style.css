@@ -4,11 +4,12 @@
 
 input {
     width: 500px;
+    font-family: 'Source Code Pro', monospace;
     max-width: 100%;
 }
 
 table * {
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Source Code Pro', monospace;
 }
 
 table {

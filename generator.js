@@ -1,8 +1,19 @@
 function build() {
     var i, j;
-    var text = $("#expression").val().toUpperCase().replace(new RegExp(' ', 'g'), "");
-    while (numOf(text, '(') > numOf(text, ')'))
-        text += ")";
+    var placeholder = $("#table-placeholder");
+    var text = $("#expression").val().toUpperCase();
+
+    if (text == "") {
+        placeholder.replaceWith("<div id='table-placeholder'></div>");
+        return;
+    }
+
+    if (text.match(/[^ABCDEFGHabcdefgh0123456789+*'() ]/g) != null) {
+        placeholder.replaceWith("<p id='table-placeholder'>Please enter a valid input.</p>");
+        return;
+    }
+
+    text = format(text);
 
     var variables = [];
     for (i = 0; i < text.length; i++)
@@ -26,54 +37,47 @@ function build() {
         var equation = text;
         for (j = 0; j < variables.length; j++)
             equation = equation.replace(new RegExp(variables[j], 'g'), data[j]);
-        string += "<td>" + '-' + "</td><td>" + solve(equation) + "</td></tr>";
+        // string += "<td>" + '-' + "</td>";
+        string += "<td>" + solve(equation) + "</td></tr>";
     }
 
     string = "<table align='center' id='table-placeholder'>" + string + "</table>";
-    $("#table-placeholder").replaceWith(string);
+    placeholder.replaceWith(string);
+
+    function format(text) {
+        while (numOf(text, '(') > numOf(text, ')'))
+            text += ")";
+        return text;
+    }
 
     function numOf(text, search) {
         var count = 0;
         for (var i = 0; i < text.length; i++)
-            if (text[i] == search)
-                count++;
+            for (var j = i; j < text.length; j++)
+                if (text[i] == search)
+                    count++;
         return count;
     }
 
     function solve(equation) {
-        var i, operands = [], operators = [];
-        for (i = 0; i < equation.length; i++) {
-            switch (equation[i]) {
-                case '0':
-                case '1':
-                    operands.push(equation[i]);
-                    break;
-                case '*':
-                case '+':
-                    operators.push(equation[i]);
-                    break;
-                case '\'':
-                    operands.push(1 - parseInt(operands.pop()));
-                    break;
-                case ')':
-                    var num1 = parseInt(operands.pop());
-                    var num2 = parseInt(operands.pop());
-                    switch (operators.pop()) {
-                        case '*':
-                            operands.push(num1 * num2);
-                            break;
-                        case '+':
-                            operands.push((num1 + num2) != 0 ? 1 : 0);
-                            break;
-                    }
-                    break;
-            }
+        var start = equation.lastIndexOf("(");
+        var end = equation.indexOf(")", start);
+        if (start != -1)
+            equation = equation.substring(0, start)
+                + solve(equation.substring(start + 1, end))
+                + equation.substring(end + 1);
+        try {
+            var safeEval = eval;
+            return safeEval(equation); // return (eval(equation) == 0) ? 0 : 1;
+        } catch (Exception) {
+            return -1;
         }
-        return operands;
     }
 }
 
 /*
- TEST CASE
- A((B+~C)(A+C))
+ TEST CASES
+ A*((B+C)*(A+C))
+ A*((B+C')*(A+C))
+ A((B+C')(A+C))
  */
