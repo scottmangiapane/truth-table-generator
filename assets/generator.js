@@ -3,11 +3,11 @@ function build() {
     var placeholder = document.getElementById("table-placeholder");
     var text = (document.getElementById("expression")).value;
     if (text == "") {
-        placeholder.innerHTML = "<div id='table-placeholder'></div>";
+        placeholder.innerHTML = "<div></div>";
         return;
     }
     if (text.match(/[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01+*'() ]/g) != null) {
-        placeholder.innerHTML = "<p id='table-placeholder'>One of the characters is not allowed.</p>";
+        placeholder.innerHTML = "<p>One of the characters is not allowed.</p>";
         return;
     }
     text = format(text);
@@ -21,7 +21,7 @@ function build() {
     }
     variables.sort();
     if (variables.length > 8) {
-        placeholder.innerHTML = "<p id='table-placeholder'>You can only have 8 variables at a time.</p>";
+        placeholder.innerHTML = "<p>You can only have 8 variables at a time.</p>";
         return;
     }
     var string = "";
@@ -44,11 +44,11 @@ function build() {
         // string += "<td>" + '-' + "</td>";
         string += "<td>" + solve(equation) + "</td></tr>";
     }
-    string = "<table align='center' id='table-placeholder'>" + string + "</table>";
+    string = "<table align='center' id>" + string + "</table>";
     if (string.indexOf("<td></td>") == -1)
         placeholder.innerHTML = string;
     else
-        placeholder.innerHTML = "<p id='table-placeholder'>Invalid expression.</p>";
+        placeholder.innerHTML = "<p>Invalid expression.</p>";
 
     function format(text) {
         text = text.replace(/ /g, '');
