@@ -7,7 +7,7 @@ function build() {
         return;
     }
     if (text.match(/[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01+*'() ]/g) != null) {
-        placeholder.innerHTML = "<p id='table-placeholder'>The input is invalid.</p>";
+        placeholder.innerHTML = "<p id='table-placeholder'>One of the characters is not allowed.</p>";
         return;
     }
     text = format(text);
@@ -45,7 +45,10 @@ function build() {
         string += "<td>" + solve(equation) + "</td></tr>";
     }
     string = "<table align='center' id='table-placeholder'>" + string + "</table>";
-    placeholder.innerHTML = string;
+    if (string.indexOf("<td></td>") == -1)
+        placeholder.innerHTML = string;
+    else
+        placeholder.innerHTML = "<p id='table-placeholder'>Invalid expression.</p>";
 
     function format(text) {
         text = text.replace(/ /g, '');
