@@ -24,12 +24,12 @@ p {
     line-height: 24px;
 }
 
-table * {
-    font-family: 'Source Code Pro', monospace;
-}
-
 table {
     border-collapse: collapse;
+}
+
+table * {
+    font-family: 'Source Code Pro', monospace;
 }
 
 th, td {
@@ -44,4 +44,12 @@ td {
 
 .align-center {
     text-align: center;
+}
+
+.example {
+    background-color: #eee;
+    color: black;
+    font-family: 'Source Code Pro', monospace;
+    padding-left: 5px;
+    padding-right: 5px;
 }
