@@ -6,8 +6,8 @@ function build() {
         placeholder.innerHTML = "<div id='table-placeholder'></div>";
         return;
     }
-    if (text.match(/[^ABCDEFGHabcdefgh01+*'() ]/g) != null) {
-        placeholder.innerHTML = "<p id='table-placeholder'>Please enter a valid input.</p>";
+    if (text.match(/[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01+*'() ]/g) != null) {
+        placeholder.innerHTML = "<p id='table-placeholder'>The input is invalid.</p>";
         return;
     }
     text = format(text);
@@ -20,6 +20,10 @@ function build() {
         }
     }
     variables.sort();
+    if (variables.length > 8) {
+        placeholder.innerHTML = "<p id='table-placeholder'>You can only have 8 variables at a time.</p>";
+        return;
+    }
     var string = "";
     string += "<tr>";
     for (i = 0; i < variables.length; i++) {
