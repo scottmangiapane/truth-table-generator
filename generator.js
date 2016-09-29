@@ -1,31 +1,30 @@
 function build() {
     var i, j;
-    var placeholder = $("#table-placeholder");
-    var text = $("#expression").val();
-
+    var placeholder = document.getElementById("table-placeholder");
+    var text = (document.getElementById("expression")).value;
     if (text == "") {
-        placeholder.replaceWith("<div id='table-placeholder'></div>");
+        placeholder.innerHTML = "<div id='table-placeholder'></div>";
         return;
     }
-
     if (text.match(/[^ABCDEFGHabcdefgh01+*'() ]/g) != null) {
-        placeholder.replaceWith("<p id='table-placeholder'>Please enter a valid input.</p>");
+        placeholder.innerHTML = "<p id='table-placeholder'>Please enter a valid input.</p>";
         return;
     }
-
     text = format(text);
-
     var variables = [];
-    for (i = 0; i < text.length; i++)
-        if ((text[i] >= 'A' && text[i] <= 'Z'))
-            if (text.indexOf(text[i]) == i)
+    for (i = 0; i < text.length; i++) {
+        if ((text[i] >= 'A' && text[i] <= 'Z')) {
+            if (text.indexOf(text[i]) == i) {
                 variables.push(text[i]);
+            }
+        }
+    }
     variables.sort();
-
     var string = "";
     string += "<tr>";
-    for (i = 0; i < variables.length; i++)
+    for (i = 0; i < variables.length; i++) {
         string += "<th>" + variables[i] + "</th>";
+    }
     string += "<th>" + text + "</th></tr>";
     for (i = 0; i < Math.pow(2, variables.length); i++) {
         string += "<tr>";
@@ -35,14 +34,14 @@ function build() {
             string += "<td>" + data[j] + "</td>";
         }
         var equation = text;
-        for (j = 0; j < variables.length; j++)
+        for (j = 0; j < variables.length; j++) {
             equation = equation.replace(new RegExp(variables[j], 'g'), data[j]);
+        }
         // string += "<td>" + '-' + "</td>";
         string += "<td>" + solve(equation) + "</td></tr>";
     }
-
     string = "<table align='center' id='table-placeholder'>" + string + "</table>";
-    placeholder.replaceWith(string);
+    placeholder.innerHTML = string;
 
     function format(text) {
         text = text.replace(/ /g, '');

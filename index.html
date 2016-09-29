@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=EDGE">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -15,9 +14,8 @@
     <!-- Input -->
     <div class="align-center container">
         <h1>Truth Table Generator</h1>
-        <p>Enter your boolean logic expression in the following format:</p>
-        <p>AND = *&emsp;OR = +&emsp;NOT = '</p>
-        <p>You may use A-H and 0-1 for variables.</p>
+        <p>Enter your boolean logic expression in the following format:
+            <br>AND = *&emsp;OR = +&emsp;NOT = '<br>You may use A-H and 0-1 for variables.</p>
         <p>Example: (A*B)'+(C*D)</p>
         <input autofocus id="expression" oninput="build()" placeholder="Expression" type="text">
     </div>
@@ -27,10 +25,6 @@
         <div id="table-placeholder"></div>
     </div>
 </main>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- Custom Scripts -->
 <script src="generator.js"></script>
 </body>

@@ -2,10 +2,26 @@
     font-family: Roboto, sans-serif;
 }
 
+h1 {
+    color: black;
+}
+
 input {
     width: 500px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 8px;
     font-family: 'Source Code Pro', monospace;
     max-width: 100%;
+}
+
+p {
+    color: #444;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 table * {
