@@ -1,14 +1,14 @@
 function build() {
     var i, j;
     var placeholder = $("#table-placeholder");
-    var text = $("#expression").val().toUpperCase();
+    var text = $("#expression").val();
 
     if (text == "") {
         placeholder.replaceWith("<div id='table-placeholder'></div>");
         return;
     }
 
-    if (text.match(/[^ABCDEFGHabcdefgh0123456789+*'() ]/g) != null) {
+    if (text.match(/[^ABCDEFGHabcdefgh01+*'() ]/g) != null) {
         placeholder.replaceWith("<p id='table-placeholder'>Please enter a valid input.</p>");
         return;
     }
@@ -31,7 +31,7 @@ function build() {
         string += "<tr>";
         var data = [];
         for (j = 0; j < variables.length; j++) {
-            data[j] = 1 - Math.floor(i / Math.pow(2, variables.length - j - 1)) % 2;
+            data[j] = Math.floor(i / Math.pow(2, variables.length - j - 1)) % 2;
             string += "<td>" + data[j] + "</td>";
         }
         var equation = text;
@@ -45,6 +45,8 @@ function build() {
     placeholder.replaceWith(string);
 
     function format(text) {
+        text = text.replace(/ /g, '');
+        text = text.toUpperCase();
         while (numOf(text, '(') > numOf(text, ')'))
             text += ")";
         return text;
@@ -53,31 +55,36 @@ function build() {
     function numOf(text, search) {
         var count = 0;
         for (var i = 0; i < text.length; i++)
-            for (var j = i; j < text.length; j++)
-                if (text[i] == search)
-                    count++;
+            if (text[i] == search)
+                count++;
         return count;
     }
 
     function solve(equation) {
-        var start = equation.lastIndexOf("(");
-        var end = equation.indexOf(")", start);
-        if (start != -1)
-            equation = equation.substring(0, start)
-                + solve(equation.substring(start + 1, end))
-                + equation.substring(end + 1);
+        while (equation.indexOf("(") != -1) {
+            var start = equation.lastIndexOf("(");
+            var end = equation.indexOf(")", start);
+            if (start != -1)
+                equation = equation.substring(0, start)
+                    + solve(equation.substring(start + 1, end))
+                    + equation.substring(end + 1);
+        }
+        equation = equation.replace(/''/g, '');
+        equation = equation.replace(/0'/g, '1');
+        equation = equation.replace(/1'/g, '0');
+        for (var i = 0; i < equation.length - 1; i++)
+            if ((equation[i] == '0' || equation[i] == '1') && (equation[i + 1] == '0' || equation[i + 1] == '1'))
+                equation = equation.substring(0, i + 1) + '*' + equation.substring(i + 1, equation.length);
         try {
             var safeEval = eval;
-            return safeEval(equation); // return (eval(equation) == 0) ? 0 : 1;
-        } catch (Exception) {
-            return -1;
+            var answer = safeEval(equation);
+            if (answer == 0)
+                return 0;
+            if (answer > 0)
+                return 1;
+            return '';
+        } catch (e) {
+            return '';
         }
     }
 }
-
-/*
- TEST CASES
- A*((B+C)*(A+C))
- A*((B+C')*(A+C))
- A((B+C')(A+C))
- */
