@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Boolean Algebra Calculator</title>
 </head>
 <body>
@@ -14,12 +14,13 @@
     <!-- Input -->
     <div class="align-center container">
         <h1>Truth Table Generator</h1>
-        <p>Enter your boolean logic expression in the following format:
-            <br>AND = <span class="example">A*B</span>&emsp;
+        <p>Enter your boolean logic expression in the following format:<br>
+            AND = <span class="example">AB</span>&emsp;
             OR = <span class="example">A+B</span>&emsp;
-            NOT = <span class="example">A'</span></p>
-        <p>Example: (A*B)'+(C*D)</p>
-        <input autofocus id="expression" oninput="build()" placeholder="Expression" type="text">
+            NOT = <span class="example">A'</span><br>
+            NAND = <span class="example">(AB)'</span>
+            NOR = <span class="example">(A+B)'</span></p>
+        <input autofocus id="expression" oninput="build()" placeholder="Example: (AB)'C+D" type="text">
         <noscript>
             <p>This app requires JavaScript to run. Please enable JavaScript and refresh this page.</p>
         </noscript>
@@ -31,6 +32,6 @@
     </div>
 </main>
 <!-- Custom Scripts -->
-<script src="assets/generator.js"></script>
+<script src="generator.js"></script>
 </body>
 </html>

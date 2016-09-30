@@ -6,11 +6,14 @@ function build() {
         placeholder.innerHTML = "<div></div>";
         return;
     }
-    if (text.match(/[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01+*'() ]/g) != null) {
+    if (text.match(/[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01+'() ]/g) != null) {
         placeholder.innerHTML = "<p>One of the characters is not allowed.</p>";
         return;
     }
-    text = format(text);
+    text = text.replace(/ /g, '');
+    text = text.toUpperCase();
+    while (numOf(text, '(') > numOf(text, ')'))
+        text += ")";
     var variables = [];
     for (i = 0; i < text.length; i++) {
         if ((text[i] >= 'A' && text[i] <= 'Z')) {
@@ -49,14 +52,6 @@ function build() {
         placeholder.innerHTML = string;
     else
         placeholder.innerHTML = "<p>Invalid expression.</p>";
-
-    function format(text) {
-        text = text.replace(/ /g, '');
-        text = text.toUpperCase();
-        while (numOf(text, '(') > numOf(text, ')'))
-            text += ")";
-        return text;
-    }
 
     function numOf(text, search) {
         var count = 0;
