@@ -5,7 +5,3 @@ Truth Table Generator is a simple web app to help users make truth tables quickl
 ## Demo
 
 https://scottmangiapane.github.io/truth-table-generator
-
-## Screenshot
-
-<img src="screenshot.png" width="400">
