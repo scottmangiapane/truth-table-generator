@@ -35,13 +35,11 @@ p {
 
 table {
     border-collapse: collapse;
-}
-
-table * {
-    font-family: 'Source Code Pro', monospace;
+    margin: 0 auto;
 }
 
 th, td {
+    font-family: 'Source Code Pro', monospace;
     letter-spacing: 1em;
     padding: 0.5em 0 0.5em 1em;
     text-align: center;
@@ -60,4 +58,10 @@ td {
     color: black;
     font-family: 'Source Code Pro', monospace;
     padding: 0 0.3em;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
 }
