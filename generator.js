@@ -1,7 +1,7 @@
 function build() {
-    var i, j;
-    var placeholder = document.getElementById("table-placeholder");
-    var text = (document.getElementById("expression")).value;
+    let i, j;
+    let placeholder = document.getElementById("table-placeholder");
+    let text = (document.getElementById("expression")).value;
     if (text == "") {
         placeholder.innerHTML = "<div></div>";
         return;
@@ -14,7 +14,7 @@ function build() {
     text = text.toUpperCase();
     while (numOf(text, '(') > numOf(text, ')'))
         text += ")";
-    var variables = [];
+    let variables = [];
     for (i = 0; i < text.length; i++) {
         if ((text[i] >= 'A' && text[i] <= 'Z')) {
             if (text.indexOf(text[i]) == i) {
@@ -27,7 +27,7 @@ function build() {
         placeholder.innerHTML = "<p>You can only have 8 variables at a time.</p>";
         return;
     }
-    var string = "";
+    let string = "";
     string += "<tr>";
     for (i = 0; i < variables.length; i++) {
         string += "<th>" + variables[i] + "</th>";
@@ -35,16 +35,15 @@ function build() {
     string += "<th>" + text + "</th></tr>";
     for (i = 0; i < Math.pow(2, variables.length); i++) {
         string += "<tr>";
-        var data = [];
+        let data = [];
         for (j = 0; j < variables.length; j++) {
             data[j] = Math.floor(i / Math.pow(2, variables.length - j - 1)) % 2;
             string += "<td>" + data[j] + "</td>";
         }
-        var equation = text;
+        let equation = text;
         for (j = 0; j < variables.length; j++) {
             equation = equation.replace(new RegExp(variables[j], 'g'), data[j]);
         }
-        // string += "<td>" + '-' + "</td>";
         string += "<td>" + solve(equation) + "</td></tr>";
     }
     string = "<table align='center' id>" + string + "</table>";
@@ -54,8 +53,8 @@ function build() {
         placeholder.innerHTML = "<p>Invalid expression.</p>";
 
     function numOf(text, search) {
-        var count = 0;
-        for (var i = 0; i < text.length; i++)
+        let count = 0;
+        for (let i = 0; i < text.length; i++)
             if (text[i] == search)
                 count++;
         return count;
@@ -63,8 +62,8 @@ function build() {
 
     function solve(equation) {
         while (equation.indexOf("(") != -1) {
-            var start = equation.lastIndexOf("(");
-            var end = equation.indexOf(")", start);
+            let start = equation.lastIndexOf("(");
+            let end = equation.indexOf(")", start);
             if (start != -1)
                 equation = equation.substring(0, start)
                     + solve(equation.substring(start + 1, end))
@@ -73,12 +72,12 @@ function build() {
         equation = equation.replace(/''/g, '');
         equation = equation.replace(/0'/g, '1');
         equation = equation.replace(/1'/g, '0');
-        for (var i = 0; i < equation.length - 1; i++)
+        for (let i = 0; i < equation.length - 1; i++)
             if ((equation[i] == '0' || equation[i] == '1') && (equation[i + 1] == '0' || equation[i + 1] == '1'))
                 equation = equation.substring(0, i + 1) + '*' + equation.substring(i + 1, equation.length);
         try {
-            var safeEval = eval;
-            var answer = safeEval(equation);
+            let safeEval = eval;
+            let answer = safeEval(equation);
             if (answer == 0)
                 return 0;
             if (answer > 0)
